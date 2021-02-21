@@ -45,19 +45,50 @@ const App = () => {
     ]
 
     const [imageUrl, setImageUrl] = useState('https://loremflickr.com/320/240/elephant')
+    const [images, setImages] = useState(ArrayImg)
+    const [newImageUrl, setNewImageUrl] = useState('')
+
     const changeImage = (url) => {
         setImageUrl(url)
     }
-    const imageComp = ArrayImg.map(ImgArr => (
-        <Image 
-            key={ImgArr}
-            url={ImgArr} 
-            changeImage={changeImage} 
-        />
-    ))
+    const imageComp = images.map(ImgArr => {
+        let id = Math.floor(Math.random() * 1000 + 1)
+        console.log(id)
+        id = ImgArr + id
+        return (
+            <Image 
+                key={id}
+                url={ImgArr} 
+                changeImage={changeImage} 
+                addImage={addImage}
+            />            
+        )
+    })
+    const addImage = (e) => {
+        e.preventDefault()
+        e.stopPropagation()
+        console.log('click')
+        console.log(newImageUrl)
+        setImages([...images, newImageUrl])
+    }
+
     return (
         <div>
+            {console.log(images)}
+
             <h2>Gallery</h2>
+
+            <form>
+                <input 
+                    type="text" 
+                    value={newImageUrl} 
+                    placeholder='url image' 
+                    onChange={event => setNewImageUrl(event.target.value)} 
+                />
+                <button onClick={addImage}>Add image</button>
+            </form>
+            <br/>
+
             { imageComp }
             <div>
                 <Showcase urlImg={imageUrl}/>
