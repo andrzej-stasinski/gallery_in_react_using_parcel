@@ -3,32 +3,47 @@ import ReactDOM from 'react-dom'
 
 const styles = {
     img: {
-        width: 200,
-        display: 'block',
-        marginBottom: 5
+        width: 150,
+        marginBottom: 5,
+        marginRight: 5
+    },
+    imgLarge: {
+        width: '100%',
     }
 }
 
-const handleClick = (event) => {
-    console.log(event.target.src)
-}
-const Image = ({url}) => (
+const Image = ({url}) => {
+    const handleClick = event => {
+        event.stopPropagation()
+        console.log(url)
+        Showcase(url)
+    }
+    return (
         <img
             src={url} alt="elephant" 
             style={styles.img}
-            // onClick={() => console.log(url)} 
             onClick={handleClick} 
         />
+    )
+}
+
+const Showcase = (url) => (
+    <div>
+        <img src='https://loremflickr.com/320/240/fish' style={styles.imgLarge} />
+    </div>
 )
 
 const App = () => (
-    <>
+    <div onClick={event => console.log('click')}>
         <h2>Gallery</h2>
-        <Image url="https://hatrabbits.com/wp-content/uploads/2017/01/random.jpg"/>
+        <Image url="https://loremflickr.com/320/240/elephant"/>
         <Image url='https://loremflickr.com/320/240/dog' />
         <Image url='https://loremflickr.com/320/240/cat' />
-        <Image url='https://loremflickr.com/320/240/chamster' />
-    </>
+        <Image url='https://loremflickr.com/320/240/fish' />
+        <div>
+            <Showcase />
+        </div>
+    </div>
     )
 
 ReactDOM.render(<App />, document.getElementById('root'))
