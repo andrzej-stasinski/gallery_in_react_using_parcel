@@ -8,17 +8,26 @@ const styles = {
         marginBottom: 5
     }
 }
-const Image = (props) => (
-        <img src={props.srcImg} alt="elephant" style={styles.img} />
-    )
+
+const handleClick = (event) => {
+    console.log(event.target.src)
+}
+const Image = ({url}) => (
+        <img
+            src={url} alt="elephant" 
+            style={styles.img}
+            // onClick={() => console.log(url)} 
+            onClick={handleClick} 
+        />
+)
 
 const App = () => (
     <>
         <h2>Gallery</h2>
-        <Image srcImg="https://hatrabbits.com/wp-content/uploads/2017/01/random.jpg"/>
-        <Image srcImg='https://loremflickr.com/320/240/dog' />
-        <Image srcImg='https://loremflickr.com/320/240/cat' />
-        <Image srcImg='https://loremflickr.com/320/240/chamster' />
+        <Image url="https://hatrabbits.com/wp-content/uploads/2017/01/random.jpg"/>
+        <Image url='https://loremflickr.com/320/240/dog' />
+        <Image url='https://loremflickr.com/320/240/cat' />
+        <Image url='https://loremflickr.com/320/240/chamster' />
     </>
     )
 
