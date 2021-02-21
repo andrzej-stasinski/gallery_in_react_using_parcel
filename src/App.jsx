@@ -1,15 +1,18 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 
-// const Comp = () => React.createElement('h1', {}, 'Hello')
-const App = () => (
-    <div>
-        <h2>Hello World</h2>
+const Image = () => (
         <img src="https://hatrabbits.com/wp-content/uploads/2017/01/random.jpg" alt="elephant" />
-    </div>
     )
 
-// ReactDOM.render(React.createElement(App), document.getElementById('root'))
+const App = () => (
+    <>
+        <h2>Gallery</h2>
+        <Image />
+        <Image />
+    </>
+    )
+
 ReactDOM.render(<App />, document.getElementById('root'))
 
 
