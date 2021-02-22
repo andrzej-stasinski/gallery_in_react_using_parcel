@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import ReactDOM from 'react-dom'
 import Image from './components/Image'
 import Showcase from './components/ShowCase'
@@ -8,15 +8,32 @@ import Form from './components/Form'
 const App = () => {
 
     const [imagesArrayUrl, setImagesArrayUrl] = useState('https://loremflickr.com/320/240/elephant')
-    const [images, setImages] = useState(ArrayImg)
+    const [images, setImages] = useState([])
     const [newImageUrl, setNewImageUrl] = useState('')
+
+    const loadFormLocalStorage = () =>  {
+        let arrayFromLocal =localStorage.getItem('gallery')
+        arrayFromLocal = JSON.parse(arrayFromLocal)
+        return arrayFromLocal
+    }
+
+    const saveToLocalStorage = (newImagesUrl) => {
+        console.log(newImagesUrl)
+        const arratToSave = JSON.stringify(newImagesUrl)
+        console.log(arratToSave)
+        localStorage.setItem('gallery', arratToSave)
+    }    
+
+    useEffect(() => {
+        console.log('useEffect')
+        setImages(loadFormLocalStorage())
+    },[])
 
     const changeImage = (url) => {
         setImagesArrayUrl(url)
     }
     const imageComp = images.map(ImgArr => {
         let id = Math.floor(Math.random() * 1000 + 1)
-        console.log(id)
         id = ImgArr + id
         return (
             <Image 
@@ -33,7 +50,13 @@ const App = () => {
         e.stopPropagation()
         console.log('click')
         console.log(newImageUrl)
-        setImages([...images, newImageUrl])
+
+        const newImagesUrl = [...images, newImageUrl]
+        // setImages([...images, newImageUrl])
+
+        setImages(newImagesUrl)
+        saveToLocalStorage(newImagesUrl)
+
         setNewImageUrl('')
     }
 
