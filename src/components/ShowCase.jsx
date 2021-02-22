@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 const styles = {
     imgLarge: {
         width: '100%',
+        maxWidth: 600,
     }
 }
 

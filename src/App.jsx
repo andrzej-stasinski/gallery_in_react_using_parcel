@@ -4,29 +4,26 @@ import Image from './components/Image'
 import Showcase from './components/ShowCase'
 import ArrayImg from './components/ArrayImg'
 import Form from './components/Form'
+import firebase from './firebase'
 
 const App = () => {
 
     const [imagesArrayUrl, setImagesArrayUrl] = useState('https://loremflickr.com/320/240/elephant')
-    const [images, setImages] = useState([])
+    const [images, setImages] = useState(ArrayImg)
     const [newImageUrl, setNewImageUrl] = useState('')
-
-    const loadFormLocalStorage = () =>  {
-        let arrayFromLocal =localStorage.getItem('gallery')
-        arrayFromLocal = JSON.parse(arrayFromLocal)
-        return arrayFromLocal
-    }
-
-    const saveToLocalStorage = (newImagesUrl) => {
-        console.log(newImagesUrl)
-        const arratToSave = JSON.stringify(newImagesUrl)
-        console.log(arratToSave)
-        localStorage.setItem('gallery', arratToSave)
-    }    
-
+ 
     useEffect(() => {
         console.log('useEffect')
-        setImages(loadFormLocalStorage())
+        console.log(process.env)
+        const unsub = firebase
+            .firestore().collection('Images').get()
+            .then(images => {
+                console.dir(images)
+                const loadImages = images.docs.map(image => image.data().url)
+                console.log(loadImages)
+                setImages(loadImages)
+            })
+        return () => unsub()
     },[])
 
     const changeImage = (url) => {
@@ -51,18 +48,18 @@ const App = () => {
         console.log('click')
         console.log(newImageUrl)
 
-        const newImagesUrl = [...images, newImageUrl]
-        // setImages([...images, newImageUrl])
-
-        setImages(newImagesUrl)
-        saveToLocalStorage(newImagesUrl)
+        setImages([...images, newImageUrl])
+        console.log(firebase)
+        firebase.firestore().collection('Images').add({url: newImageUrl})
 
         setNewImageUrl('')
     }
 
     return (
         <div>
-            {console.log(images)}
+            {/* {console.log(images)} */}
+            {/* {console.log(process.env)} */}
+
             <h2>Gallery</h2>
 
             <Form 
