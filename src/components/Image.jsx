@@ -11,7 +11,6 @@ const styles = {
 
 const Image = ({url, changeImage}) => {
     const handleClick = event => {
-        console.log(url)
         changeImage(url)
     }
     return (

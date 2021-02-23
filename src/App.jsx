@@ -5,6 +5,7 @@ import Showcase from './components/ShowCase'
 import ArrayImg from './components/ArrayImg'
 import Form from './components/Form'
 import firebase from './firebase'
+import {DATABASE_URL} from './firebase'
 
 const App = () => {
 
@@ -12,15 +13,13 @@ const App = () => {
     const [images, setImages] = useState(ArrayImg)
     const [newImageUrl, setNewImageUrl] = useState('')
  
+    // get data from Cloud firestore
+    // -----------------------------
     useEffect(() => {
-        console.log('useEffect')
-        console.log(process.env)
         const unsub = firebase
             .firestore().collection('Images').get()
             .then(images => {
-                console.dir(images)
                 const loadImages = images.docs.map(image => image.data().url)
-                console.log(loadImages)
                 setImages(loadImages)
             })
         return () => unsub()
@@ -42,24 +41,18 @@ const App = () => {
         )
     })
 
+    // save data to Cloud firestore
+    // ------------------------------    
     const addImage = (e) => {
         e.preventDefault()
         e.stopPropagation()
-        console.log('click')
-        console.log(newImageUrl)
-
         setImages([...images, newImageUrl])
-        console.log(firebase)
         firebase.firestore().collection('Images').add({url: newImageUrl})
-
         setNewImageUrl('')
     }
 
     return (
         <div>
-            {/* {console.log(images)} */}
-            {/* {console.log(process.env)} */}
-
             <h2>Gallery</h2>
 
             <Form 
