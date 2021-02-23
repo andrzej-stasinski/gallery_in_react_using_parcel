@@ -12,7 +12,7 @@ const App = () => {
     const [imagesArrayUrl, setImagesArrayUrl] = useState('https://loremflickr.com/320/240/elephant')
     const [images, setImages] = useState([])
     const [newImageUrl, setNewImageUrl] = useState('')
- 
+
     const getData = () => {
         fetch(`${DATABASE_URL}/images.json`)
         .then(res => res.json())
@@ -39,9 +39,7 @@ const App = () => {
 
     // save data to Database
     // ------------------------------    
-    const addImage = (e) => {
-        e.preventDefault()
-        e.stopPropagation()
+    const addImage = newImageUrl => {
         fetch(`${DATABASE_URL}/images.json`,{
             method: 'POST',
             body: JSON.stringify({
@@ -80,7 +78,7 @@ const App = () => {
     })
 
     return (
-        <div>
+        <div style={{maxWidth: 790, margin: '0 auto', backgroundColor: '#eee', padding: 10}}>
             <h2>Gallery</h2>
 
             <Form 

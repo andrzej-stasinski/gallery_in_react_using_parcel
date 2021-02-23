@@ -5,20 +5,32 @@ const styles = {
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between',
+        marginTop: 5,
+        border: '1px solid #555',
+        marginRight: 5,
+        paddingBottom: 5,
+        borderRadius: 5,
     },
     img: {
         width: 150,
         marginBottom: 5,
-        marginRight: 5,
         cursor: 'pointer',
     },
+    button: {
+        width: '80%',
+        margin: '0 auto',
+        borderRadius: 5,
+        outline: 'none',
+        border: '1px solid #333',
+        cursor: 'pointer',
+        backgroundColor: '#e67e22',
+    }
 }
 
 const Image = ({url, changeImage, id, onDeleteImage}) => {
     const handleClick = event => {
         changeImage(url)
     }
-    // console.log(id)
     return (
         <div style={styles.divImg}>
             <img
@@ -26,7 +38,7 @@ const Image = ({url, changeImage, id, onDeleteImage}) => {
                 style={styles.img}
                 onClick={handleClick} 
             />
-            <button onClick={() => onDeleteImage(id)}>Delete</button>            
+            <button style={styles.button} onClick={() => onDeleteImage(id)}>Delete</button>            
         </div>
 
     )
