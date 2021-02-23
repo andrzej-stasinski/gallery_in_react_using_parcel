@@ -9,7 +9,7 @@
 
 #### Install app
 * install app - npm install
-* set your projectId to firebase in firebase.js
+* set your url to database in firebase.js
 
 
 
